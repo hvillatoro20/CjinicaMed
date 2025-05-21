@@ -1,0 +1,40 @@
+// database.js
+const sqlite3 = require('sqlite3').verbose()
+const path = require('path')
+
+const DB_PATH = path.join(__dirname, 'database.sqlite')
+
+function initializeDatabase() {
+    const db = new sqlite3.Database(DB_PATH)
+    
+    db.serialize(() => {
+        // Crear tablas si no existen
+        db.run(`CREATE TABLE IF NOT EXISTS doctores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            especialidad TEXT NOT NULL,
+            clinica TEXT NOT NULL,
+            horario TEXT NOT NULL
+        )`)
+        
+        db.run(`CREATE TABLE IF NOT EXISTS citas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            paciente TEXT NOT NULL,
+            doctor_id INTEGER NOT NULL,
+            clinica TEXT NOT NULL,
+            fecha TEXT NOT NULL,
+            motivo TEXT NOT NULL,
+            estado TEXT NOT NULL DEFAULT 'pendiente',
+            FOREIGN KEY(doctor_id) REFERENCES doctores(id)
+        )`)
+        
+        // Índices para mejorar el rendimiento
+        db.run('CREATE INDEX IF NOT EXISTS idx_citas_fecha ON citas(fecha)')
+        db.run('CREATE INDEX IF NOT EXISTS idx_citas_clinica ON citas(clinica)')
+        db.run('CREATE INDEX IF NOT EXISTS idx_citas_doctor ON citas(doctor_id)')
+    })
+    
+    return db
+}
+
+module.exports = initializeDatabase()

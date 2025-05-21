@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediSchedule Local</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Citas Médicas</h1>
+            <div class="user-info">
+                <select id="select-clinica">
+                    <option value="clinica1">Clínica Central</option>
+                    <option value="clinica2">Clínica Norte</option>
+                    <option value="clinica3">Clínica Sur</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="doctores">Doctores</button>
+            <button class="tab-btn" data-tab="citas">Citas</button>
+            <button class="tab-btn" data-tab="calendario">Calendario</button>
+        </div>
+
+        <div id="doctores" class="tab-content active">
+            <!-- Contenido de gestión de doctores -->
+        </div>
+
+        <div id="citas" class="tab-content">
+            <!-- Contenido de gestión de citas -->
+        </div>
+
+        <div id="calendario" class="tab-content">
+            <!-- Vista de calendario -->
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
